@@ -5,44 +5,33 @@ import java.util.*;
 
 public class WageCalculator
 {
-   public static void main(String[] args)
+   double hrlyWage = 0.00;
+   double weeklyHours = 0.00;
+   double weeklySalary = 0.00;
+   final double fullTimeHours = 40;
+
+   public WageCalculator(double wage, double hrs)
    {
-      double hrlyWage = 0.00;
-      double weeklyHours = 0.00;
-      double weeklySalary = 0.00;
-      
-      Scanner scan = new Scanner(System.in);
-      System.out.println("Please enter your hourly wage: ");
-      hrlyWage = scan.nextDouble();
-      System.out.println("Please enter the number of hours for this week: ");
-      weeklyHours = scan.nextDouble();
-      
-      weeklySalary = WageCalculator.wageCalc(hrlyWage, weeklyHours);
-      System.out.println("You're weekly salary is "+ weeklySalary + " hourly wage.");
-   }
+      hrlyWage = wage;
+      weeklyHours = hrs;
+   }   
    
-   public static double wageCalc(double wage, double hrs)
+   public double wageCalc()
    {
       double result = 0.00;
+      double OTHours = weeklyHours - fullTimeHours;
+      double OTPayRate = hrlyWage * 1.5;
+      double OTWage = OTHours * OTPayRate;
+      double RegWage = fullTimeHours * hrlyWage;
       
-      if (hrs <= 40)
+      if (weeklyHours <= fullTimeHours)
       {
-         result = wage * hrs;
+         result = hrlyWage * weeklyHours;
       }
       else
       {
-         result = WageCalculator.OTwageCalc(wage, hrs);
+         result = RegWage + OTWage;
       }
       return result;
-   }
-   
-   public static double OTwageCalc(double wage, double hrs)
-   {
-      final double fullTimeHours = 40;
-      double OTHours = hrs - fullTimeHours;
-      double OTPayRate = wage * 1.5;
-      double OTWage = OTHours * OTPayRate;
-      double RegWage = fullTimeHours * wage;
-      return RegWage + OTWage;
    }
 }
